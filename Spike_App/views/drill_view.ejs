@@ -1,0 +1,114 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Serve Game</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/ryfHBxP/Spike-logos-1.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-top: 150px;
+            /* Increased padding to create more space below the navbar */
+            background-color: #f4f4f4;
+            padding-bottom: 100px;
+        }
+
+        nav {
+            position: fixed;
+            /* Fix the navbar at the top */
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            /* Ensure the navbar is clearly visible */
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Center the container horizontally */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            overflow: hidden;
+            padding-bottom: 100px;
+        }
+
+        .left-content,
+        .right-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .left-content {
+            border-right: 2px solid #ddd;
+        }
+
+        .right-content {
+            text-align: center;
+        }
+
+        .right-content img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div id="logo1">
+            <a href="/"><img src="https://i.ibb.co/ryfHBxP/Spike-logos-1.png" alt="Logo" id="logo"></a>
+        </div>
+        <div id="navigation-items">
+            <button class="dropbtn"><a href="/drill_library">Drill Library</a></button>
+            <% if(isAuthenticated) { %>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="/practice_plans">Practice Plans</a></button>
+                <div class="dropdown-content">
+                    <a href="/practice_plans">Open Plan</a>
+                    <a href="/create_plan">Create Plan</a>
+                </div>
+            </div>
+            <% } %>
+            <% if(!isAuthenticated) { %>
+            <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/logout/">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+    <div class="container">
+        <div class="left-content">
+            <!-- <h1>Test <%= drillId %></h1> -->
+            <h1><%= drill.name %></h1>
+            <p><strong>Category:</strong> <%= drill.category %></p>
+            <p><strong>Level:</strong> <%= drill.level %></p>
+            <p><strong>Duration:</strong> <%= drill.duration %></p>
+            <p><strong>#Plyr:</strong> <%= drill.numberOfPlayers %></p>
+            <p><strong>Focus:</strong> <%= drill.focus %></p>
+            <p><strong>Description:</strong> <%= drill.description %></p>
+            <p><strong>Scoring:</strong> <%= drill.scoring %></p>
+            <p><strong>Behaviours:</strong> <%= drill.behaviors %></p>
+            <p><strong>Variations:</strong> <%= drill.notesVariations %></p>
+            <p><strong>Tags:</strong> <%= drill.keywords %></p>
+            <p><strong>Step by Step</strong> <%= drill.stepByStep %></p>
+        </div>
+        <div class="right-content">
+            <img src="<%= drill.link %>" alt="Image of the One Serve Game drill">
+        </div>
+    </div>
+
+    <script src="/js/nav_holder.js"></script>
+
+</body>
+
+</html>

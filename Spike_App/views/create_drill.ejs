@@ -1,0 +1,145 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Drill</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/ryfHBxP/Spike-logos-1.png">
+</head>
+
+<body>
+
+    <nav>
+        <div id="logo1">
+            <a href="/"><img src="https://i.ibb.co/ryfHBxP/Spike-logos-1.png" alt="Logo" id="logo"></a>
+        </div>
+        <div id="navigation-items">
+            <button class="dropbtn"><a href="/drill_library">Drill Library</a></button>
+            <% if(isAuthenticated) { %>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="/practice_plans">Practice Plans</a></button>
+                <div class="dropdown-content">
+                    <a href="/practice_plans">Open Plan</a>
+                    <a href="/create_plan">Create Plan</a>
+                </div>
+            </div>
+            <% } %>
+            <% if(!isAuthenticated) { %>
+            <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/logout/">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+    <section class="header-section">
+        <header>
+            <h1 class="practice-plan-header">Create Drill</h1>
+        </header>
+    </section>
+
+    <section class="drill-container">
+        <div class="drill-image">
+            <input type="file" id="drill-image-input" class="drill-image-input" name="drillImage">
+            <label for="drill-image-input" class="drill-image-label">Insert Drill Image<br>'Choose file' or drag and
+                drop image</label>
+        </div>
+        <form id="create-drill-form" action="/save-drill" method="POST">
+            <div class="drill-form">
+                <div class="form-group">
+                    <input type="hidden" id="drill-id" name="drillId" value="<%= newDrillID %>">
+                </div>
+                <div class="form-group">
+                    <label for="drill-name">Name of Drill:</label>
+                    <input type="text" id="drill-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="drill-category">Drill Category:</label>
+                    <select id="drill-category" name="category">
+                        <option value="6v6">6 v 6</option>
+                        <option value="Attacking Drills">Attacking Drills</option>
+                        <option value="Back Row Attacking">Back Row Attacking</option>
+                        <option value="Ball Control">Ball Control</option>
+                        <option value="Blocking">Blocking</option>
+                        <option value="Butterfly">Butterfly</option>
+                        <option value="CLA">CLA</option>
+                        <option value="Competition">Competition</option>
+                        <option value="Defense">Defense</option>
+                        <option value="Forearm Passing">Forearm Passing</option>
+                        <option value="IFTE">IFTE</option>
+                        <option value="Middles">Middles</option>
+                        <option value="Out of System">Out of System</option>
+                        <option value="Overhead Passing">Overhead Passing</option>
+                        <option value="Outside Hitters">Outside Hitters</option>
+                        <option value="Serve Receive">Serve Receive</option>
+                        <option value="Serving">Serving</option>
+                        <option value="Setting">Setting</option>
+                        <option value="Small Team">Small Team</option>
+                        <option value="Swing Hitting">Swing Hitting</option>
+                        <option value="TOTAL Volleyball">TOTAL Volleyball</option>
+                        <option value="Transition">Transition</option>
+                        <option value="Warm Up Drills">Warm Up Drills</option>
+                        <option value="Younger Players">Younger Players</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="drill-level">Level:</label>
+                    <input type="text" id="drill-level" name="level" required>
+                </div>
+                <div class="form-group">
+                    <label for="players">Number of Players:</label>
+                    <input type="number" id="numberOfPlayers" name="numberOfPlayers" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration (minutes):</label>
+                    <input type="number" id="duration" name="duration" min="1" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="focus">Focus:</label>
+                    <input type="text" id="focus" name="focus">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" cols="50"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="scoring">Scoring:</label>
+                    <textarea id="scoring" name="scoring" rows="2" cols="50"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="behaviors">Behaviors:</label>
+                    <textarea id="behaviors" name="behaviors" rows="2" cols="50"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="variations">Variations:</label>
+                    <textarea id="variations" name="variations" rows="2" cols="50"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="keywords">Keywords:</label>
+                    <textarea id="keywords" name="keywords" rows="2" cols="50"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="stepByStep">Step By Step:</label>
+                    <textarea id="stepByStep" name="stepByStep" rows="4" cols="50"></textarea>
+                </div>
+
+                <form id="create-drill-form" action="/save-drill" method="POST">
+                    <!-- Existing input fields -->
+                    <input type="hidden" name="link" value="https://i.ibb.co/MVnGkGH/6-v-6-Tip-Ball-Control.png">
+                    <!-- Submit button and other fields -->
+                </form>
+
+                <div class="form-group">
+                    <button id="save-btn" class="share-button" onclick="saveFormData()">Save</button>
+                </div>
+            </div>
+        </form>
+    </section>
+    <script type="module" src="/js/create_drill.js"></script>
+    <script src="/js/nav_holder.js"></script>
+</body>
+
+</html>

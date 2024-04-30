@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill Created Confirmation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/ryfHBxP/Spike-logos-1.png">
+    <style>
+.confirmation-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    background: #f3f3f3;
+}
+
+.confirmation-container {
+    max-width: 600px;
+    padding: 30px;
+    background: #ffffff;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.confirmation-header {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.confirmation-message {
+    margin-bottom: 30px;
+    color: #333333;
+}
+
+.confirmation-details {
+    margin-bottom: 30px;
+}
+
+.confirmation-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #f76540;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #f76540;
+}
+
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div id="logo1">
+            <a href="/"><img src="https://i.ibb.co/ryfHBxP/Spike-logos-1.png" alt="Logo" id="logo"></a>
+        </div>
+        <div id="navigation-items">
+            <button class="dropbtn"><a href="/drill_library">Drill Library</a></button>
+            <% if(isAuthenticated) { %>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="/practice_plans">Practice Plans</a></button>
+                <div class="dropdown-content">
+                    <a href="/practice_plans">Open Plan</a>
+                    <a href="/create_plan">Create Plan</a>
+                </div>
+            </div>
+            <% } %>
+            <% if(!isAuthenticated) { %>
+            <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/logout/">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+
+    <section class="confirmation-section">
+        <div class="confirmation-container">
+            <h1 class="confirmation-header">Drill Successfully Created!</h1>
+            <p class="confirmation-message">Your new drill has been saved to the library.</p>
+            <div class="confirmation-details">
+                <h2 id="drill-name-display">Drill Name: <%= drillData.name %></h2>
+                <p id="drill-category-display">Category: <%= drillData.category %></p>
+                <p id="drill-level-display">Level: <%= drillData.level %></p>
+                <p id="drill-players-display">Number of Players: <%= drillData.numberOfPlayers %></p>
+                <p id="drill-duration-display">Duration: <%= drillData.duration %> minutes</p>
+                <p id="drill-focus-display">Focus: <%= drillData.focus %></p>
+            </div>
+            <a href="/" class="button">Back to Home</a>
+        </div>
+    </section>
+    <script src="/js/nav_holder.js"></script>
+</body>
+
+</html>

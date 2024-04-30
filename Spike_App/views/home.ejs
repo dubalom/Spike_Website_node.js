@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spike Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/ryfHBxP/Spike-logos-1.png">
+</head>
+<body>
+    <nav>
+        <div id="logo1">
+            <a href="/"><img src="https://i.ibb.co/ryfHBxP/Spike-logos-1.png" alt="Logo" id="logo"></a>
+        </div>
+        <div id="navigation-items">
+            <button class="dropbtn"><a href="/drill_library">Drill Library</a></button>
+            <% if(isAuthenticated) { %>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="/practice_plans">Practice Plans</a></button>
+                <div class="dropdown-content">
+                    <a href="/practice_plans">Open Plan</a>
+                    <a href="/create_plan">Create Plan</a>
+                </div>
+            </div>
+            <% } %>
+            <% if(!isAuthenticated) { %>
+            <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/logout/">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+    <header>
+        <h1 class="welcome-header">Welcome, <%= isAuthenticated ? userName : "Guest" %></h1>
+        <% if(!isAuthenticated) { %> <!-- Add prompt to log in if not authenticated -->
+            <p class="guest-login">Please <a href="/login/" class="login-text">log in</a> to access the dashboard.</p>
+        <% } %>
+    </header>
+
+    <% if(isAuthenticated) { %>
+    <div class="dashboard">
+        <!-- Dashboard components -->
+        <a href="/practice_plans" class="dashboard-component">
+            <h2 class="card-header">Open Practice Plan</h2>
+            <p class="card-text"> Open the most recent practice plan here.</p>
+        </a>
+
+        <a href="/drill_library" class="dashboard-component">
+            <h2 class="card-header">Open Drill</h2>
+            <p class="card-text">Open the most recently added drill here.</p>
+        </a>
+
+        <a href="/create_plan" class="dashboard-component">
+            <h2 class="card-header">Create Practice Plan</h2>
+            <p class="card-text"> Create a new practice plan.</p>
+        </a>
+
+        <a href="/create_drill" class="dashboard-component">
+            <h2 class="card-header">Create Drill</h2>
+            <p class="card-text">Create a new drill.</p>
+        </a>
+    </div>
+    <% } %>
+
+    <script src="/js/nav_holder.js"></script>
+</body>
+</html>

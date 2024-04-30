@@ -1,0 +1,249 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill Library</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/ryfHBxP/Spike-logos-1.png">
+    <style>
+        .add-to-plan-btn {
+            border: 0;
+        }
+
+        .add-to-plan-btn:hover {
+            border: 0;
+            background-color: orangered;
+            color: white;
+            cursor: pointer;
+        }
+
+        .add-to-plan-btn:clicked {
+            background-color: orangered;
+            color: white;
+        }
+
+        .bottom-buttons {
+            position: fixed;
+            border-radius: 15%;
+            bottom: 20px;
+            margin: 20px;
+            padding: 10px;
+            border: 0;
+            background-color: orangered;
+            color: white;
+            cursor: pointer;
+        }
+
+        .bottom-buttons:hover {
+            background-color: red;
+            color: orangered;
+        }
+
+        .left-bottom-cancel {
+            left: 25%;
+        }
+
+        .right-bottom-add {
+            right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div id="logo1">
+            <a href="/"><img src="https://i.ibb.co/ryfHBxP/Spike-logos-1.png" alt="Logo" id="logo"></a>
+        </div>
+        <div id="navigation-items">
+            <button class="dropbtn"><a href="/drill_library">Drill Library</a></button>
+            <% if(isAuthenticated) { %>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="/practice_plans">Practice Plans</a></button>
+                <div class="dropdown-content">
+                    <a href="/practice_plans">Open Plan</a>
+                    <a href="/create_plan">Create Plan</a>
+                </div>
+            </div>
+            <% } %>
+            <% if(!isAuthenticated) { %>
+            <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/logout/">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+    <section class="L1">
+        <div class="leftcontent">
+            <h1 class="L1h1">DRILLS BY CATEGORY</h1>
+            <input type="text" id="searchInput" placeholder="Search drills...">
+            <ul id="results"></ul>
+
+            <div class="listdrill">
+                <ul>
+                    <a href="#" onclick="filterByCategory('Warm Up Drills')">
+                        <li>Warm Up Drills</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Younger Players')">
+                        <li>Younger Players</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Attacking')">
+                        <li>Attacking</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Ball Control')">
+                        <li>Ball Control</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('6 V 6')">
+                        <li>6 V 6</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Back Row Attacking')">
+                        <li>Back Row Attacking</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Ball Control')">
+                        <li>Ball Control</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Blocking')">
+                        <li>Blocking</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Butterfly')">
+                        <li>Butterfly</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('CLA')">
+                        <li>CLA</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Competition')">
+                        <li>Competition</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Defense')">
+                        <li>Defense</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Forearm Passing')">
+                        <li>Forearm Passing</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('IFTE')">
+                        <li>IFTE</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Middles')">
+                        <li>Middles</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Overhead Passing')">
+                        <li>Overhead Passing</li>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Outside Hitters')">
+                        <li>Outside Hitters</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card-container">
+        <% drills.forEach(drill => { %>
+        <div class="card">
+            <div class="card-image">
+                <a href="/drill_view/<%= drill.drillId %>">
+                    <img src=<%= drill.link %> alt="drill" class="drill-img">
+                </a>
+            </div>
+            <div class="card-info">
+                <a href="/drill_view/<%= drill.drillId %>" class="drill-link">
+                    <h2 class="drillname"><%= drill.name %></h2>
+                </a>
+                <p class="category"><strong>Category:</strong> <%= drill.category %></p>
+            </div>
+
+            <% if(planNumber) { %>
+            <!-- <a href="/edit_plan/<%= planNumber %>/<%= drill.drillId %>">
+                <button id="add-to-plan" class="add-to-plan-btn" data-plan-number="<%= planNumber %>"
+                data-drill-id="<%= drill.drillId %>">Add to Plan</button>
+            </a> -->
+
+            <button id="add-drill-to-plan" class="add-to-plan-btn"
+                data-plan-number="<%= planNumber %>" data-drill-id="<%= drill.drillId %>">
+                Add to Plan
+            </button>
+
+
+            <!-- <button class="add-to-plan" onclick="addDrillToPlan(<%= drill.drillId %>)">Add to Plan</button> -->
+            <!-- <a href="view_plan/<%= planNumber %>">Cancel</a> -->
+            <% } %>
+        </div>
+        <% }); %>
+
+        <% if(planNumber) { %>
+        <a href="/view_plan/<%= planNumber %>#top">
+            <button class="bottom-buttons left-bottom-cancel">Cancel</button>
+        </a>
+        <a href="/edit_plan/<%= planNumber %>">
+            <button class="bottom-buttons right-bottom-add">Add</button>
+        </a>
+        <% } %>
+    </section>
+
+    <script src="/js/searchDrills.js"></script>
+    <script src="/js/nav_holder.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Select all elements with the class 'add-to-plan-btn'
+        var addToPlanButtons = document.querySelectorAll('.add-to-plan-btn');
+
+        // Add event listener to "add-drill-to-plan" button to hide cancel
+        document.getElementById('add-drill-to-plan').addEventListener('click', function () {
+            document.querySelector('.left-bottom-cancel').style.display = 'none';
+        });
+
+        // Add event listener to each button
+        addToPlanButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Highlight the button to indicate that it has been clicked
+                button.style.backgroundColor = 'orangered';
+
+                var planNumber = parseInt(this.getAttribute('data-plan-number'));
+                var drillId = parseInt(this.getAttribute('data-drill-id'));
+                console.log('planNumber: ' + planNumber + ' of type ' + typeof planNumber);
+                console.log('drillId: ' + drillId + ' of type ' + typeof drillId);
+
+                // Call sendDrillAndPlan function after retrieving planNumber and drillId
+                sendDrillAndPlan(drillId, planNumber);
+            });
+        });
+
+        // Function to send drill and plan information to server
+        function sendDrillAndPlan(drillId, planNumber) {
+            const data = {
+                drillId: drillId,
+                planNumber: planNumber
+            };
+
+            fetch('/update_practice_plans', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Update successful
+                        console.log('Practice plan updated successfully.');
+                        // Optionally, you can reload the page or update the UI here
+                    } else {
+                        // Handle update failure
+                        console.error('Failed to update practice plan.');
+                    }
+                })
+                .catch(error => {
+                    // Handle network errors
+                    console.error('Error updating practice plan:', error);
+                });
+            console.log('Updating practice plan...');
+        }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,317 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Spike App - Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <link rel="icon" type="image/png" href="https://i.ibb.co/ryfHBxP/Spike-logos-1.png">
+    <style>
+        body {
+            padding-bottom: 100px;
+        }
+
+        .save-drill-button {
+            display: none;
+            position: relative;
+            display: block;
+            float: right;
+            margin-left: auto !important;
+            top: -20;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div id="logo1">
+            <a href="/"><img src="https://i.ibb.co/ryfHBxP/Spike-logos-1.png" alt="Logo" id="logo"></a>
+        </div>
+        <div id="navigation-items">
+            <button class="dropbtn"><a href="/drill_library">Drill Library</a></button>
+            <% if(isAuthenticated) { %>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="/practice_plans">Practice Plans</a></button>
+                <div class="dropdown-content">
+                    <a href="/practice_plans">Open Plan</a>
+                    <a href="/create_plan">Create Plan</a>
+                </div>
+            </div>
+            <% } %>
+            <% if(!isAuthenticated) { %>
+            <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/logout/">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+    <section id="startFromHere" class="room-for-nav">
+        <header>
+            <h1 class="practice-plan-header">Practice Plan <%= plan_number - 100000 %></h1>
+        </header>
+        <p class="practice-plan-date">Date Created: <%= plan.date_created %></p>
+        <% plan.drills.forEach((drill, index) => { %>
+        <section class="practice-plan-container">
+            <div class="practice-line-container">
+                <div class="practice-line">
+                    <div class="column">
+                        <div class="label">Drill Number:</div>
+                        <div class="value"><%= index + 1 %></div>
+                    </div>
+                    <div class="column">
+                        <a href="/drill_view/<%= drill.drillId %>">
+                            <div class="label">Activity:</div>
+                            <div class="value"><%= drill.name %></div>
+                            <p class="open-full-view">Click to Open Full Drill Info</p>
+                        </a>
+                    </div>
+                    <div class="column">
+                        <div class="label">Duration:</div>
+                        <div class="value"><%= drill.time %> mins</div>
+                        <button id="edit-drill-duration-<%= drill.drillId %>" class="item-edit"
+                            style="display: none;">Edit</button>
+                    </div>
+                    <div class="column">
+                        <div class="label">Scoring:</div>
+                        <div class="value"><%= drill.scoring %></div>
+                        <button id="edit-drill-scoring-<%= drill.drillId %>" class="item-edit"
+                            style="display: none;">Edit</button>
+                    </div>
+                    <div class="column">
+                        <div class="label">Behaviors:</div>
+                        <div class="value"><%= drill.behaviors %></div>
+                        <button id="edit-drill-behaviors-<%= drill.drillId %>" class="item-edit"
+                            style="display: none;">Edit</button>
+                    </div>
+                </div>
+                <div class="edit-icon">
+                    <button id="edit-drill-<%= drill.drillId %>" class="edit-drill-data">Edit Drill</button>
+                    <!-- Add this form for deleting a drill -->
+                    <form action="/delete-drill" method="POST">
+                        <input type="hidden" name="planNumber" value="<%= plan.plan_number %>">
+                        <input type="hidden" name="drillId" value="<%= drill.drillId %>">
+                        <button type="submit" class="delete-drill" onclick="confirmDelete(event);">Delete Drill</button>
+                    </form>
+                </div>
+                <div class="edit-icon">
+                    <button id="save-drill-button-<%= drill.drillId %>" class="save-drill-button"
+                        style="display: none">Save</button>
+                </div>
+            </div>
+        </section>
+        <% }) %>
+
+
+
+        <!-- Pop up window to get input to edit scoring, duration and behaviors for drills -->
+        <div id="overlay" class="overlay"></div>
+
+        <div id="popup-container" class="popup-container">
+            <div class="popup-content">
+                <span class="close">&times;</span>
+                <h2>Edit Drill</h2>
+                <input type="text" id="edit-input" class="edit-input" placeholder="Enter new value">
+                <button id="save-drill-changes-btn" class="save-drill-btn item-edit">Save</button>
+            </div>
+        </div>
+
+
+        <section id="add-drill" style="display: block">
+            <div class="add-button">
+                <a href="/drill_library/<%= plan_number %>"><button id="add-activity-btn" class="add-activity-btn">Add
+                        Activity</button></a>
+            </div>
+        </section>
+
+        <!-- Popup Window to confirm changes made to practice plan -->
+        <div id="popup-overlay" class="popup-overlay">
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <p>Changes made to practice plans are permanent and cannot be undone.</p>
+                    <p>Would you like to continue?</p>
+                    <a href="/edit_plan/<%= plan_number %>">
+                        <button id="cancel-btn" class="popup-button">No, Cancel</button>
+                    </a>
+                    <!-- This should take the user back to the original drill view. Prior to this you need to capture all the edits made to the drills -->
+                    <a href="/view_plan/<%= plan_number %>">
+                        <button id="continue-btn" class="popup-button">Yes, Save Changes</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <button id="cancel-edit" class="default-button cancel">Cancel</button>
+        <button id="save-edit" class="share-button save">Save</button>
+
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select all edit buttons
+            var editButtons = document.querySelectorAll('.edit-drill-data');
+
+            // Add click event listener to each edit button
+            editButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Get the drill ID
+                    var drillId = this.id.split('-')[2];
+
+                    // Show the corresponding edit buttons for the drill
+                    document.getElementById('edit-drill-scoring-' + drillId).style.display =
+                        'block';
+                    document.getElementById('edit-drill-behaviors-' + drillId).style.display =
+                        'block';
+                    document.getElementById('edit-drill-duration-' + drillId).style.display =
+                        'block';
+                    document.getElementById('edit-drill-data' + drillId).style.display = 'none';
+                    document.getElementById('save-drill-button-' + drillId).style.display =
+                        'block';
+                });
+            });
+
+            // JS FOR EDITING DRILL VALUES
+            // Get all edit buttons
+            var editButtons = document.querySelectorAll('.item-edit');
+
+            // Attach click event listeners to all edit buttons
+            editButtons.forEach(function (button) {
+                button.addEventListener('click', handleEditClick);
+            });
+
+            // Get the overlay and popup container
+            var overlay = document.getElementById('overlay');
+            var popupContainer = document.getElementById('popup-container');
+
+
+
+            // LINES 63 TO 93 START HERE!!!!
+
+            // Get the input field inside the popup
+            var editInput = document.getElementById('edit-input');
+
+            // Function to show edit drill popup
+            function showEditPopup() {
+                popupContainer.style.display = 'block';
+                document.body.classList.add('popup-active'); // add class to disable scrolling
+            }
+
+            // Function to hide popup and overlay
+            function hidePopup() {
+                popupContainer.style.display = 'none';
+                document.body.classList.remove('popup-active'); // remove class to enable scrolling
+            }
+
+            // Function to show confirmation popup
+            function showConfirmationPopup() {
+                document.getElementById('popup-overlay').style.display = 'block';
+                document.body.classList.add('popup-active'); // add class to disable scrolling
+            }
+
+            // Function to hide confirmation popup
+            function hideConfirmationPopup() {
+                document.getElementById('popup-overlay').style.display = 'none';
+                document.body.classList.remove('popup-active'); // remove class to enable scrolling
+            }
+
+            // Function to handle edit button click
+            function handleEditClick(event) {
+                // Show the popup
+                showEditPopup();
+
+                // Get the value of the clicked item
+                var value = event.target.parentNode.querySelector('.value').textContent;
+
+                // Set the value in the input field
+                editInput.value = value;
+            }
+
+            // function to handle save drill changes button click
+            document.getElementById('save-drill-changes-btn').addEventListener('click', function () {
+                // Get the new value from the input field
+                var newValue = editInput.value;
+
+                // Update the corresponding value in the UI
+                document.querySelector('.value').textContent = newValue;
+
+                // Hide the popup
+                hidePopup();
+            });
+
+            // Function to handle close button click
+            document.querySelector('.close').addEventListener('click', hidePopup);
+
+            // LINES 63 TO 93 END HERE!!!!
+
+
+
+
+            // Function to handle cancel edit button click
+            document.getElementById('cancel-edit').addEventListener('click', function () {
+                // Revert changes made to the drills and plan
+
+
+                // Redirect to view plan page
+                window.history.back();
+            });
+
+            // function to handle save edit button click
+            document.getElementById('save-edit').addEventListener('click', function () {
+                // Show the confirmation popup
+                showConfirmationPopup();
+            });
+
+            // Function to handle continue button click
+            document.getElementById('continue-btn').addEventListener('click', function () {
+                // Call function to save the changes ( added drills, edited drills, deleted drills )
+
+
+
+
+
+
+                // Redirect to view plan page
+            });
+
+
+            // Close popup when clicking outside the popup
+            overlay.addEventListener('click', function (event) {
+                if (event.target === overlay) {
+                    hidePopup();
+                }
+            });
+        });
+    </script>
+    <script src="/js/nav_holder.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+        function confirmDelete(event) {
+            event.preventDefault(); // Stop form submission
+            Swal.fire({
+                title: 'Are you sure?',
+                //text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4CAF50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form programmatically if the user confirms
+                    event.target.form.submit();
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

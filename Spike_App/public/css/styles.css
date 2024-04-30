@@ -1,0 +1,966 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* Your combined CSS styles */
+/* Basic styling for the dashboard */
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Navigation bar styling */
+
+nav {
+   background-color: FAF9F6;
+   color: #f76540;
+   padding: 10px;
+   display: flex;
+   justify-content: space-between !important;
+   align-items: center;
+   max-width: 1400px;
+   margin-left: auto;
+   margin-right: auto;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   transition: top 0.3s;
+   width: 100%;
+}
+
+nav #navigation-items {
+    margin-right: 20px;
+}
+
+nav #home-button {
+    order: 0; /* Move the home button to the start of the flex container */
+}
+#logo {
+    width: 75px;
+
+}
+
+.logo1 {
+    padding-left: 72px;
+}
+
+
+nav a {
+    color: #f76540;
+    text-decoration: none;
+    padding: 8px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #f76540;
+    text-decoration: underline;
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Your existing CSS styles */
+
+/* Additional CSS for Dropdown */
+button.dropbtn {
+    background: none;
+    border: none;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    color: #f76540;
+    text-decoration: none;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    background: none;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* END */
+
+.welcome-header {
+    padding-top: 150px;
+    margin: 20px;
+}
+
+.dashboard {
+    padding: 20px;
+    text-align: center;
+}
+
+.dashboard-component {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    display: inline-block;
+    width: 45%;
+    text-align: left;
+    text-decoration: none;
+    color: black;
+    background-color:#FAEBD7;
+}
+
+.card-header {
+    margin-bottom: 5px;
+}
+
+.card-text {
+    margin-top: 0;
+}
+
+.guest-login {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/*Create Practice Plan / View Plan styling*/
+
+.header-section {
+    padding-top: 100px;
+}
+
+.practice-line-container {
+    position: relative !important;
+    border: 1px solid #ccc !important;
+    padding: 10px !important;
+    margin: 0px 20px 10px 20px !important;
+}
+
+.practice-line {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    padding: 10px;
+}
+
+.practice-plan-header {
+    padding-top: 10px;
+    margin: 20px 20px 0 20px !important;
+    color: #f76540;
+}
+
+.practice-plan-date {
+    margin: 5px 20px 20px 20px !important;
+    color: grey;
+}
+
+.column {
+    flex: 1 1 20% !important;
+    /* Adjust the width as needed */
+}
+
+.label {
+    font-weight: bold !important;
+}
+
+.value {
+    margin-left: 5px !important;
+}
+
+.line {
+    margin: 10px 20px !important;
+}
+
+.edit-image {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.edit-icon {
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+}
+
+.edit-icon button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #f76540; /* Adjust color as needed */
+    text-decoration: underline;
+}
+
+.item-edit {
+    background: #f76540;
+    border: none;
+    border-radius: 20%;
+    color: white;
+    cursor: pointer;
+    margin: 5;
+}
+
+.save-icon {
+    position: absolute !important;
+    bottom: 25px !important;
+    right: 25px !important;
+}
+
+.add-icon {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px !important;
+    /* Adjust spacing as needed */
+}
+
+.add-icon img {
+    width: 30px;
+    /* Adjust icon size as needed */
+    height: auto;
+    /* Maintain aspect ratio */
+}
+
+/* Additional CSS for Edit and Save Buttons */
+.default-button,
+.edit-button,
+.delete-button,
+.save-button,
+.share-button {
+    position: fixed;
+    bottom: 20px;
+    color: white;
+    cursor: pointer;
+    background-color: #f76540;
+    border: none;
+    border-radius: 15%;
+    width: 80px;
+    height: 40px;
+}
+
+.cancel {
+    background-color: white;
+    color: #f76540;
+    text-decoration: underline;
+    right: 120px;
+}
+
+.cancel:hover {
+    color: #ff0000;
+}
+
+.edit-button:hover,
+.delete-button:hover,
+.save:hover,
+.share-button:hover {
+    background-color: #ff3300;
+}
+
+.edit-button {
+    left: 20px;
+}
+
+/* .save:hover {
+    background-color: #4CAF50;
+} */
+
+.delete-button {
+    left: 120px;
+}
+
+.share-button {
+    right: 20px;
+}
+
+/* Additional CSS for Square Cards */
+
+/* .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 100%;
+    padding: 100px 20px 20px 20px;
+} */
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: calc(100% - 210px); /* Adjusting max-width */
+    padding: 120px 20px 20px 260px; /* Adding left padding */
+}
+
+.card {
+    width: 45%;
+    /* Changed width to 45% */
+    height: 220px;
+    /* Added height */
+    margin: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-content {
+    padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .card-container {
+        justify-content: flex-start;
+    }
+
+    .card {
+        width: 90%;
+    }
+}
+
+/* Additional CSS for Left Side Section */
+
+.L1 {
+    float: left;
+    width: 30%;
+    background-color: #FAF9F6;
+    padding: 20px;
+    margin: 20px;
+}
+
+.L1h1 {
+    color: #f76540;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.listdrill ul {
+    list-style: none;
+    padding: 0;
+}
+
+.listdrill li {
+    margin-bottom: 10px;
+}
+
+.listdrill button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.listdrill button:hover {
+    text-decoration: underline;
+}
+
+/* Additional CSS for Warm-Up Drills Header */
+.warmup-header {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    font-size: 24px;
+    color: #f76540;
+    background-color: white;
+}
+
+/* Styling for expanded drill view */
+.card.expanded {
+  position: absolute; /* Make card take up full right side */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 60%; /* Adjust for the width of the left section */
+  width: 40%;
+  z-index: 10; /* Make sure it's on top */
+  background-color: #fff;
+}
+
+.card-details {
+  overflow-y: auto; /* Enable scrolling for long details */
+  height: 100%;
+}
+
+/* Styling for log in page */
+/* Your combined CSS styles */
+/* Basic styling for the dashboard */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    background-color: #FAF9F6;
+    color: #f76540;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+nav a {
+    color: #f76540;
+    text-decoration: none;
+    padding: 8px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #f76540;
+    text-decoration: underline;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.welcome-header {
+    padding-top: 150px;
+    margin: 20px;
+    text-align: center;
+}
+
+.form-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 94%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-button, .signup-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #f76540;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-button:hover, .signup-button:hover {
+    background-color: #d9534f;
+}
+
+@media screen and (min-width: 768px) {
+    .form-container {
+        flex-direction: row;
+    }
+
+    form {
+        margin-right: 20px;
+    }
+}
+
+
+/* Create A Drill Styling */
+/* Reset default margin and padding */
+/* Reset default margin and padding */
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+} */
+
+.drill-container {
+    display: flex;
+    height: 100vh;
+    margin: 20px;
+}
+
+.drill-image {
+    flex: 0 0 30%;
+    background-image: url('https://i.ibb.co/Z6Pg4Kk/Automatic.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    cursor: pointer; /* Change cursor to pointer when hovering over the image */
+    opacity: 0.5; /* Set opacity to 0.5 */
+}
+
+.drill-image:hover {
+    opacity: 0.8; /* Increase opacity slightly when hovering over the image */
+}
+
+.drill-image-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    background-color: black; /* Set background color to black */
+    padding: 10px; /* Add padding for better visibility */
+}
+
+.drill-form {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.drill-form .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.drill-form .form-group label {
+    flex: 0 0 auto;
+    width: 200px;
+    text-align: left;
+    margin-right: 20px;
+}
+h1.h1member {
+    padding-left: 0px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+h1.h1member {
+    padding-left: 68px;
+    text-align: center;
+    white-space: nowrap;
+}
+.formlogin {
+    margin-right: 0px;
+}
+form {
+    margin-left: 529px;
+    text-align: center;
+    width: 43%;
+    padding: 49px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+
+.drill-form .form-group input[type="text"],
+.drill-form .form-group input[type="number"],
+.drill-form .form-group select,
+.drill-form .form-group textarea {
+    flex: 1;
+}
+
+
+/* CSS for a tags */
+a {
+    color: black;
+    text-decoration: none;
+}
+
+/* CSS FOR CREATE PLAN PAGE */
+/* Styling for original underloaded popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+    display: none; /* initially hidden */
+    justify-content: center;
+    align-items: center;
+}
+
+.popup {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.popup-header {
+    margin-top: 0;
+}
+
+.popup-content {
+    margin-bottom: 20px;
+}
+
+/* Style the buttons */
+#continue-btn, #cancel-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#continue-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+#cancel-btn {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+/* Styling for overload popup */
+.popup-overlay2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+    z-index: 999; /* ensure it's above everything */
+    display: none; /* initially hidden */
+}
+
+.popup2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup-content2 {
+    text-align: center;
+}
+
+/* Additional styles for button, if needed */
+#return-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+
+/* CSS for Drill Editing in Practice Plan ( view_plan.ejs ) */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+    z-index: 999; /* make sure overlay is on top of other content */
+    display: none; /* initially hidden */
+}
+
+.popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000; /* make sure popup is on top of overlay */
+    display: none; /* initially hidden */
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.edit-input {
+    margin-bottom: 10px;
+}
+
+.save-drill-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+body.popup-active {
+    overflow: hidden; /* disable scrolling when popup is open */
+}
+
+/* ADDED AT 6:38 on THURSDAY */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    background-color: #f1f1f1; /* Adjust color as needed */
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjusts spacing between cards */
+}
+
+.card {
+    display: flex;
+    background-color: white;
+    box-shadow: 0px 0px 10px #ccc;
+    overflow: hidden; /* Prevents content from spilling outside */
+}
+
+.card-image {
+    flex: 0 0 auto; /* Image does not grow or shrink */
+    padding-left: 15px; /* Adds space between image and card border */
+    margin-top: 10px;
+}
+
+.drill-img {
+    width: 100px; /* Adjust image width as needed */
+    height: auto;
+}
+
+.card-info {
+    flex: 1; /* Takes up remaining space */
+    padding: 10px; /* Spacing inside the info area */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.drill-link {
+    text-decoration: none;
+    color: black; /* Adjust text color as needed */
+}
+
+.category {
+    margin-top: 10px; /* Spacing between name and category */
+}
+.drillname{
+    margin-bottom: 10px;
+}
+.drillname { /* If you're using the drillname class on the h2 */
+    margin-top: 20px; /* Reduces space above the h2 element */
+    margin-bottom: 52px; /* Adjust as necessary to control spacing */
+}
+
+/* ADDED FROM ANTON AT APRIL 25 */
+.L1 {
+   position: fixed;
+   top: 100px; /* Adjust this if the header is smaller or larger */
+   bottom: 50px;
+   left: 0;
+   width: 200px;
+   max-height: calc(100% - 100px); /* Adjust if necessary, considering header/footer */
+   overflow-y: auto;
+   background-color: white;
+   z-index: 999;
+   padding: 10px;
+   padding-bottom: 50px; /* May need to increase if not enough space at bottom */
+}
+
+/* Ensure there's no unexpected padding/margin inside that might push contents down */
+.L1 ul {
+   margin: 0; /* Resets any default margin */
+   padding: 0; /* Resets any default padding */
+   list-style-type: none; /* Removes bullet points */
+
+    animation: highlightOption 0.5s ease-in-out;
+}
+
+.L1 li {
+   padding: 5px; /* Ensure consistent padding for each item */
+   margin: 0; /* Prevents extra space between items */
+   animation: highlightOption 0.5s ease-in-out;
+}
+.L1 li:hover {
+    background-color: orange; /* Specify the background color you want */
+    box-shadow: 0 0 59px orange; /* Add a shadow effect to make it pop out */
+    transition: box-shadow 0.3s ease; /* Add a smooth transition for the shadow effect */
+     font-size: 1.20em;
+}
+
+.login-text {
+    text-decoration: underline;
+    font-size: large;
+}
+
+.login-text:hover {
+    color: #f76540;
+    font-size: x-large;
+}
+
+
+/* Button styling for delete and cancel buttons on practice_plan.ejs */
+.confirm-delete-btn {
+    background-color: rgb(212, 28, 28);
+    border: none;
+    color: white;
+    height: 25px;
+    width: 70px;
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #ff0000;
+}
+
+.cancel-delete-btn {
+    background-color: #b4b4b4;
+    border: none;
+    color: white;
+    height: 25px;
+    width: 70px;
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+.cancel-delete-btn:hover {
+    background-color: #dcdada;
+}
+
+/* Popup in practice_plan.ejs */
+.plan-selector {
+    margin-bottom: 20px;
+}
+
+.p-p-popup {
+    width: 80%;
+}
+
+/* Add to plan button in drill_library.ejs */
+/* background-color: #f76540;
+    border: none;
+    color: white;
+    width: 80px;
+    right: 10px;
+    margin-left: 100px;
+    /* margin-bottom: 50px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    border-radius: 15%; */
+
+
+/* START */
+/* Update added April 28*/
+.room-for-nav {
+    padding-top: 100px;
+}
+
+.open-full-view {
+    color: white;
+    cursor: pointer;
+    background-color: #f76540;
+    border: none;
+    border-radius: 15%;
+    width: 200px;
+    padding-left: 10px;
+}
+
+/* END */
+
+/* START */
+/* button styling for create plan page */
+.add-activity-btn {
+    background-color: #f76540;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 20px;
+    width: 100px;
+    height: 30px;
+    border-radius: 15%;
+}
+
+.add-activity-btn:hover {
+    background-color: #ff3300;
+}
+
+/* END */
+
+/* START */
+/* Styling changes for edit drill page from Anton added April 29 */
+.edit-icon form {
+   border: none; /* Removes any border */
+   margin: 0; /* Removes any margin */
+   padding: 0; /* Removes any padding */
+   display: inline; /* Keeps the form in line with the buttons */
+}
+
+.edit-drill, .delete-drill {
+   padding: 10px 20px; /* Adjust padding to make buttons larger */
+   border-radius: 4px; /* Optional: Adds rounded corners */
+   border: none; /* Removes border */
+   cursor: pointer; /* Cursor changes to pointer to indicate clickable */
+   color: white; /* Text color */
+}
+
+.edit-drill {
+   background-color: #4CAF50; /* Green background for edit */
+   font-size: 20px;
+}
+
+.edit-drill:hover, .delete-drill:hover {
+   opacity: 0.8; /* Adds a hover effect for visual feedback */
+}
+
+/* END */

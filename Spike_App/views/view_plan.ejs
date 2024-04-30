@@ -1,0 +1,138 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Spike App - Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <link rel="icon" type="image/png" href="https://i.ibb.co/ryfHBxP/Spike-logos-1.png">
+    <style>
+        body {
+            padding-bottom: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div id="logo1">
+            <a href="/"><img src="https://i.ibb.co/ryfHBxP/Spike-logos-1.png" alt="Logo" id="logo"></a>
+        </div>
+        <div id="navigation-items">
+            <button class="dropbtn"><a href="/drill_library">Drill Library</a></button>
+            <% if(isAuthenticated) { %>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="/practice_plans">Practice Plans</a></button>
+                <div class="dropdown-content">
+                    <a href="/practice_plans">Open Plan</a>
+                    <a href="/create_plan">Create Plan</a>
+                </div>
+            </div>
+            <% } %>
+            <% if(!isAuthenticated) { %>
+            <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/logout/">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+    <section id="startFromHere" class="room-for-nav">
+        <header>
+            <h1 class="practice-plan-header">Practice Plan <%= plan_number - 100000 %></h1>
+        </header>
+        <p class="practice-plan-date">Date Created: <%= plan.date_created %></p>
+
+
+        <% plan.drills.forEach((drill, index) => { %>
+        <section class="practice-plan-container">
+            <div class="practice-line-container">
+                <div class="practice-line">
+                    <div class="column">
+                        <div class="label">Drill Number:</div>
+                        <div class="value"><%= index + 1 %></div>
+                    </div>
+                    <div class="column">
+                        <a href="/drill_view/<%= drill.drillId %>">
+                            <div class="label">Activity:</div>
+                            <div class="value"><%= drill.name %></div>
+                            <p class="open-full-view">Click to Open Full Drill Info</p>
+                        </a>
+                    </div>
+                    <div class="column">
+                        <div class="label">Duration:</div>
+                        <div class="value"><%= drill.time %> mins</div>
+                        <button id="edit-drill-duration" class="item-edit" style="display: none;">Edit</button>
+                    </div>
+                    <div class="column">
+                        <div class="label">Scoring:</div>
+                        <div class="value"><%= drill.scoring %></div>
+                        <button id="edit-drill-scoring" class="item-edit" style="display: none;">Edit</button>
+                    </div>
+                    <div class="column">
+                        <div class="label">Behaviors:</div>
+                        <div class="value"><%= drill.behaviors %></div>
+                        <button id="edit-drill-behaviors" class="item-edit" style="display: none;">Edit</button>
+                    </div>
+                </div>
+                <div class="edit-icon">
+                    <button id="edit-drill" style="display: none;">Edit Drill</button>
+                </div>
+            </div>
+        </section>
+        <% }) %>
+
+        <!-- <button onclick="generatePDF()">Generate PDF</button> -->
+
+        <a href="/edit_plan/<%= plan_number %>">
+            <button id="edit-plan" class="edit-button">Edit Plan</button>
+        </a>
+        <button id="share-plan" class="share-button">Share Plan</button>
+
+    </section>
+
+    <!-- <script src="button-handlers.js"></script> -->
+    <script src="pdf-generator.js"></script>
+    <script src="/js/nav_holder.js"></script>
+    <script>
+        //Generate pdf function down below
+        function generatePDF() {
+            var element = document.getElementById(
+                "startFromHere"); // Select the starting point of the content to convert to PDF
+            var opt = {
+                margin: [1, 0.5, 1, 0.5], // top, left, bottom, right margin in inches
+                filename: 'practice-plan.pdf',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                }, // Use JPEG for better color handling with high quality
+                html2canvas: {
+                    scale: 2
+                }, // Improves the resolution of the output PDF
+                jsPDF: {
+                    unit: 'in',
+                    format: 'letter',
+                    orientation: 'portrait'
+                }
+            };
+
+            html2pdf().set(opt).from(element).save().then(function () {
+                console.log("PDF generated!");
+                window.location.href =
+                    '/share_plan/<%= plan.plan_number %>'; // Optionally redirect after saving the PDF
+            }).catch(function (error) {
+                console.error("Failed to generate PDF: ", error);
+            });
+        }
+        document.getElementById("share-plan").addEventListener("click", function () {
+            generatePDF(); // Call the generatePDF function
+        });
+    </script>
+</body>
+
+</html>

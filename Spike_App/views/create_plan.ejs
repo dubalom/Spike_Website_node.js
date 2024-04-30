@@ -1,0 +1,217 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Spike App - Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/ryfHBxP/Spike-logos-1.png">
+</head>
+
+<body>
+
+    <nav>
+        <div id="logo1">
+            <a href="/"><img src="https://i.ibb.co/ryfHBxP/Spike-logos-1.png" alt="Logo" id="logo"></a>
+        </div>
+        <div id="navigation-items">
+            <button class="dropbtn"><a href="/drill_library">Drill Library</a></button>
+            <% if(isAuthenticated) { %>
+            <div class="dropdown">
+                <button class="dropbtn"><a href="/practice_plans">Practice Plans</a></button>
+                <div class="dropdown-content">
+                    <a href="/practice_plans">Open Plan</a>
+                    <a href="/create_plan">Create Plan</a>
+                </div>
+            </div>
+            <% } %>
+            <% if(!isAuthenticated) { %>
+            <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/logout/">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+
+    <section class="header-section">
+        <header>
+            <h1 class="practice-plan-header">Practice Plan <%= usedPlans + 1 %></h1>
+        </header>
+        <p id="date" class="practice-plan-date">[ Today's Date ]</p>
+    </section>
+
+
+    <section class="practice-plan-container">
+        <div class="practice-line-container">
+            <div class="practice-line">
+                <div class="column">
+                    <div class="label">Time:</div>
+                    <div class="value">[Time Value]</div>
+                </div>
+                <div class="column">
+                    <div class="label">Duration:</div>
+                    <div class="value">[Duration Value]</div>
+                </div>
+                <div class="column">
+                    <div class="label">Activity:</div>
+                    <div class="value">[Activity Value]</div>
+                </div>
+                <div class="column">
+                    <div class="label">Scoring:</div>
+                    <div class="value">[Scoring Value]</div>
+                    <button class="item-edit">Edit</button>
+                </div>
+                <div class="column">
+                    <div class="label">Behaviors:</div>
+                    <div class="value">[Behaviors Value]</div>
+                    <button class="item-edit">Edit</button>
+                </div>
+            </div>
+            <div class="edit-icon">
+                <button>Edit</button>
+            </div>
+        </div>
+
+
+        <hr class="line">
+
+    </section>
+
+    <section id="add-drill-section">
+        <div class="add-button">
+            <a href="/drill_library/<%= newPlanNumber %>"><button id="add-activity-btn" class="add-activity-btn">Add
+                    Activity</button></a>
+        </div>
+    </section>
+
+    <!-- <div class="add-icon">
+        <a href="drill_library.html"><img src="https://i.ibb.co/k6y4wPd/add-icon.png" alt="Add Drill"></a>
+    </div> -->
+
+    <!-- If the user has used less than 10 practice plans, show the pop-up overlay -->
+    <% if (usedPlans < 10) { %>
+    <div id="popup-overlay" class="popup-overlay">
+        <div class="popup">
+            <div class="popup-content">
+                <p>You have currently used <span id="used-plans"></span> / 10 practice plans. Once you use all 10 of
+                    your plans, you will have to delete one to proceed. Would you like to continue?</p>
+                <button id="continue-btn">Yes, Continue</button>
+                <a href="/practice_plans">
+                    <button id="cancel-btn">Cancel, and Return to Practice Plans</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- If the user has used all 10 practice plans, show the pop-up overlay -->
+    <% if(usedPlans == 10) { %>
+    <div id="popup-overlay2" class="popup-overlay2">
+        <div class="popup2">
+            <div class="popup-content2">
+                <p>You have used all 10 of your practice plans. You will need to delete one to proceed.</p>
+                <a href="/practice_plans">
+                    <button id="return-btn">Return to Practice Plans</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <button id="cancel-edit" class="default-button cancel" style="display: none;">Cancel</button>
+    <button id="save-btn" class="share-button" style="display:none;">Save</button>
+
+    <div id="ejs-data" data-used-plans="<%= usedPlans %>"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Get the current date
+            var now = new Date();
+            var date = now.toLocaleDateString(); // Extract only the date part
+
+            // Insert date into HTML
+            document.getElementById("date").innerHTML = date;
+
+            // Function to show the pop-up window
+            function showPopup(usedPlans) {
+                // Update the used plans count in the pop-up content
+                document.getElementById("used-plans").textContent = usedPlans;
+
+                // Show the pop-up overlay
+                document.getElementById("popup-overlay").style.display =
+                    "flex"; // Display as flex to center vertically and horizontally
+
+                // Add an event listener to the "Yes, continue" button
+                document.getElementById('continue-btn').addEventListener('click', function () {
+                    // Hide the pop-up overlay
+                    document.getElementById("popup-overlay").style.display = "none";
+
+                    // Optionally, you can perform additional actions here, such as allowing the user to continue working with the background content.
+                    document.getElementById("save-btn").style.display = "block";
+
+                    // Call createPlan function here
+                    createPlan();
+
+                    // Redirect the user to the edit plan page
+                    window.location.href = '/practice_plans';
+                });
+            }
+
+            // Function to create a new practice plan
+            function createPlan() {
+                // Send the drillData to the server
+                fetch('/save_plan', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Drill data saved successfully');
+                        } else {
+                            console.error('Failed to save drill data:', response.statusText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Network error:', error);
+                    });
+            }
+
+            // Call the showPopup function with the number of used plans when the page loads
+            window.addEventListener('load', function () {
+                var usedPlans = document.getElementById('ejs-data').dataset.usedPlans;
+                showPopup(usedPlans);
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get the return button
+                var returnBtn = document.getElementById("return-btn");
+
+                // Get the popup overlay
+                // var overlay = document.getElementById("popup-overlay2");
+
+                // Show the popup overlay
+                document.getElementById("popup-overlay2").style.display = "block";
+
+                // Disable scrolling on the body
+                document.body.style.overflow = "hidden";
+
+                // Add click event listener to the return button
+                returnBtn.addEventListener("click", function () {
+                    // Hide the popup overlay
+                    overlay.style.display = "none";
+
+                    // Enable scrolling on the body
+                    document.body.style.overflow = "auto";
+                });
+            });
+        });
+    </script>
+    <script src="/js/nav_holder.js"></script>
+</body>
+
+</html>
